@@ -1,0 +1,56 @@
+#include <iostream>
+using namespace std;
+
+void Solution(int input[],int size);
+
+int main()
+{
+    int arr_size = 12;
+    int input[arr_size] = {7,10,2,8,16,1,3,4,22,14,12,13};
+    Solution(input,0,arr_size,6);
+    return 0;
+}
+
+void Solution(int input[],int first,int last,int index)
+{
+    if(last == 1)
+        return;
+    int i=0,j=size-2;
+    int std = input[size-1];
+    int temp[2];
+    while(1)
+    {
+        for(;;i++)
+        {
+            if(std <= input[i])
+            {
+                temp[0] = input[i];
+                break;
+            }
+        }
+        for(;;j--)
+        {
+            if(std >= input[j])
+            {
+                temp[1] = input[j];
+                break;
+            }
+        }
+        if(i>=j)
+        {
+            input[size-1] = input[i];
+            input[i] = std;
+            break;
+        }
+        else
+        {
+            input[i] = temp[1];
+            input[j] = temp[0];
+        }
+    }
+    for(int k=0;k<size;k++)
+        cout << input[k] << " ";
+    cout << endl;
+    if(index > i)
+        Solution(input,)
+}
