@@ -97,7 +97,7 @@ void List::show() const
 
 List::~List()
 {
-	while(count != 0)
+	while(!isEmpty())
 		Delete(1);
 }
 
