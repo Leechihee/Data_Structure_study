@@ -42,5 +42,5 @@ public:
 	template<typename B> friend List<B> MergeAndSort(const List<B> & L1, const List<B> & L2); // 정렬된 두 리스트를 병합, 재정렬 후 리스트 리턴
 };
 
-#include "CUSTOM_List.hpp"
+#include "Custom_List.hpp"
 #endif
