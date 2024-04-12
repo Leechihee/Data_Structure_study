@@ -1,3 +1,4 @@
+//회문 판단 프로그렘
 #include <iostream>
 #include <string>
 #include "Custom_queue.h"
