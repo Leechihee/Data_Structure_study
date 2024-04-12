@@ -8,7 +8,7 @@ int main()
 {
 	using namespace std;
 	
-	Queue<int> input(41);
+	Queue<int> input(N);
 	
 	for(int i = 1;i<=N;i++)
 		input.Add(i);
