@@ -1,7 +1,7 @@
 #ifndef CUSTOM_LIST_HPP_
 #define CUSTOM_LIST_HPP_
 
-#include "Custom_List.h"
+#include "Custom_list.h"
 
 //List public method
 // 생성자, 파괴자
@@ -59,7 +59,7 @@ void List<T>::Insert(int pos, T item)
 	}
 	else if(count+1 < pos || pos <= 0)
 	{
-		cout << "Index Erorr!\n";
+		cout << "Insert() : Index Erorr!\n";
 		exit(-1);
 	}
 	else
@@ -83,12 +83,12 @@ void List<T>::Delete(int pos)
 {
 	if(isEmpty())
 	{
-		cout << "리스트가 비어있습니다.\n";
+		cout << "Delete() : 리스트가 비어있습니다.\n";
 		exit(-1);
 	}
 	else if(count < pos || pos <= 0)
 	{
-		cout << "Index Erorr!\n";
+		cout << "Delete() : Index Erorr!\n";
 		exit(-1);
 	}
 	else
@@ -109,7 +109,7 @@ void List<T>::Sort(int start, int end)
 {
 	if(isEmpty())
 	{
-		cout << "리스트가 비어있습니다.\n";
+		cout << "Sort() : 리스트가 비어있습니다.\n";
 		exit(-1);
 	}
 	T pivot = ReturnData(end);
@@ -157,32 +157,107 @@ int List<T>::FindOrAdd(T item)
 }
 
 template<typename T>
-void List<T>::NodeSwap(int pos)
+void List<T>::Swap(int pos1, int pos2)
 {
 	if(isEmpty())
 	{
-		cout << "리스트가 비어있습니다.\n";
+		cout << "Swap() : 리스트가 비어있습니다\n";
+		exit(-1);
+	}
+	else if(pos1 == pos2)
+		return;
+	else if(count < pos1 && count < pos2 && pos1 <= 0 && pos2 <= 0)
+	{
+		cout << "Swap() : INDEX ERORR\n";
 		exit(-1);
 	}
 	else
 	{
-		node* target = head,*target2,*temp;
-		for(int i = Begin();i<pos-1;i++)
-			target = head->next;
-		if(target->next->next == NULL)
+		Insert(pos1,ReturnData(pos2));
+		Insert(pos2+1,ReturnData(pos1+1));
+		Delete(pos1+1);
+		Delete(pos2+1);
+	}
+}
+
+template<typename T>
+void List<T>::NodeSwap(int pos)
+{
+	if(isEmpty())
+	{
+		cout << "NodeSwap() : 리스트가 비어있습니다.\n";
+		exit(-1);
+	}
+	else
+	{
+		node * before = head,* target,* Next,* temp;
+		if(pos == 1)
 		{
-			target2 = target->next;
-			temp = target2;
-			target2 = target;
-			target = temp;
+			target = before->next;
+			Next = target->next;
+			temp = target;
+			target = Next;
+			Next = temp;
+			Next->next = target->next; 
+			target->next = Next;
+			before->next = target;
+			return;
+		}
+		for(int i = Begin();i<=pos-2;i++)
+			before = before->next;
+		target = before->next->next;
+		if(target->next == NULL)
+		{
+			Next = before->next;
+			temp = target;
+			target = Next;
+			Next = temp;
+			Next->next = target;
+			target->next = NULL;
+			before->next = Next;
 		}
 		else
 		{
-			target = target->next;
-			target2 = target->next->next;
-			temp = target2;
-			target2 = target;
-			target = temp;
+			before = before->next;
+			Next = target->next;
+			temp = target;
+			target = Next;
+			Next = temp;
+			Next->next = target->next; 
+			target->next = Next;
+			before->next = target;
+		}
+	}
+}
+
+template<typename T>
+void List<T>::nChenge(int pos,const List<T> & source)
+{
+	if(source.isEmpty())
+	{
+		cout << "nChenge() : source 리스트가 비어있습니다.\n";
+		exit(-1);
+	}
+	if(Size() - pos > source.Size())
+	{
+		for(int i = pos;i<source.Size()+pos;i++)
+		{
+			T temp = source.ReturnData(i-pos+1);
+			ReturnData(i) = temp;
+		}
+	}
+	else
+	{
+		for(int i = pos;i<source.Size()+pos;i++)
+		{
+			int test = Size();
+			if(i <=Size())
+			{
+				Insert(i,source.ReturnData(i-pos+1));
+				Delete(i+1);
+			}
+			else
+				Insert(i,source.ReturnData(i-pos+1));
 		}
 	}
 }
@@ -194,20 +269,20 @@ void List<T>::show() const
 	node* temp;
 	for(temp = head->next;temp->next != NULL;temp = temp->next)
 		cout << temp->data << " ";
-	cout << temp->data << endl;
+	cout << temp->data;
 }
 
 template <typename T>
-T List<T>::ReturnData(int pos) const
+T& List<T>::ReturnData(int pos) const
 {
 	if(isEmpty())
 	{
-		cout << "리스트가 비어있습니다.";
+		cout << "ReturnData() : 리스트가 비어있습니다.";
 		exit(-1);
 	}
 	else if(count < pos || pos <= 0)
 	{
-		cout << "Index Erorr!\n";
+		cout << "ReturnData() : Index Erorr!\n";
 		exit(-1);
 	}
 	else
@@ -225,7 +300,7 @@ int List<T>::FindData(T target) const
 	int Target = target;
 	if(isEmpty())
 	{
-		cout << "리스트가 비어있습니다.\n";
+		cout << "FindData() : 리스트가 비어있습니다.\n";
 		exit(-1);
 	}
 	else
@@ -246,7 +321,7 @@ bool List<T>::isSorted() const
 {
 	if(isEmpty())
 	{
-		cout << "리스트가 비어있습니다.\n";
+		cout << "isSorted() : 리스트가 비어있습니다.\n";
 		exit(-1);
 	}
 	else
@@ -265,10 +340,17 @@ bool List<T>::isSorted() const
 
 //List operator method
 template<typename T> 
-List<T> List<T>::operator=(const List<T> & L)
+void List<T>::operator=(const List<T> & L)
 {
-	List<T> Temp(L);
-	return Temp;
+	if(L.isEmpty())
+	{
+		cout << "operator=() : 리스트가 비어있습니다.\n";
+		exit(-1);
+	}
+	while(!isEmpty())
+		Delete(1);
+	for(int i = 1;i<L.Size()+1;i++)
+		Insert(i,L.ReturnData(i));
 }
 
 //List friend function
@@ -308,6 +390,5 @@ List<F> MergeAndSort(const List<F> & L1, const List<F> & L2)
 	Temp.Sort(Temp.Begin(),Temp.End());
 	return Temp;
 }
-
 
 #endif
