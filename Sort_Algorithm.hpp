@@ -20,7 +20,7 @@ void Select_Sort(A & cont)
 		int maxIndex = i;
 		for(int j = i-1;j>=1;j--)
 		{
-			if(cont.ReturnData(maxIndex) < cont.ReturnData(j))
+			if(cont[maxIndex] < cont[j])
 				maxIndex = j;
 		}
 		cont.Swap(maxIndex,i);
