@@ -40,6 +40,7 @@ public:
 	int Size() const {return count;} // 리스트에 저장된 데이터 개수 출력
 	// 연산자 오버로딩
 	void operator=(const List<T> & L); // 복사생성자와 동일
+	T& operator[](const int index); // index 접근 연산자
 	//프렌드 함수;
 	template<typename A> friend List<A> ReverseCopy(const List<A> & L); // 리스트에 저장된 데이터를 뒤집고 복사 후 리스트 리턴
 	template<typename B> friend List<B> MergeAndSort(const List<B> & L1, const List<B> & L2); // 정렬된 두 리스트를 병합, 재정렬 후 리스트 리턴
