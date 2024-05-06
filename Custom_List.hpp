@@ -353,6 +353,17 @@ void List<T>::operator=(const List<T> & L)
 		Insert(i,L.ReturnData(i));
 }
 
+template<typename T>
+T& List<T>::operator[](const int index)
+{
+	if(count < index || index <= 0)
+	{
+		cout << "Delete() : Index Erorr!\n";
+		exit(-1);
+	}
+	return (T&)ReturnData(index);	
+}
+
 //List friend function
 template<typename F>
 List<F> ReverseCopy(const List<F> & L)
