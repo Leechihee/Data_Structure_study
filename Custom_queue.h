@@ -60,5 +60,30 @@ public:
 	B GetLast(); // 후미에 있는 데이터 리턴, 큐가 비어있으면 프로그램 종료
 };
 
+template<typename C>
+class Priority_Queue{
+	C* heap;
+	int max;
+	int count = 0;
+	void Swap(int index1, int index2);
+public:
+	// 생성자 & 파괴자
+	Priority_Queue(const int size);
+	Priority_Queue(const Priority_Queue & PQ);
+	~Priority_Queue();
+	// 큐 수정 메서드
+	void Add(const C item);
+	C Remove();
+	// 큐 리턴 메서드
+	void heapSort(C* arr, int size);
+	bool isEmpty() const;
+	bool isFull() const;
+	int Size() const {return count;}
+	C* TEST() {return heap;}
+	Priority_Queue<C> operator=(const Priority_Queue & PQ);
+};
+
 #include "Custom_queue.hpp"
+#include "Custom_dequeue.hpp"
+#include "Custom_priority_queue.hpp"
 #endif
