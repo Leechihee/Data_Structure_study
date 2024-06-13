@@ -34,7 +34,7 @@ ADMatrix<datatype>::~ADMatrix()
 template<typename datatype>
 void ADMatrix<datatype>::insertVertex(datatype Data)
 {
-	if(isFull())
+	if(!isFull())
 		dataArr[vertex_count++] = Data;
 	else
 	{
@@ -57,7 +57,7 @@ void ADMatrix<datatype>::insertEdge(const datatype Vertex1, const datatype Verte
 			insertVertex(insert_vel);
 		}
 	}
-	int index1 = 0, index2 = 0;
+	int index1 = -1, index2 = -1;
 	for(int i = 0;i<vertex;i++)
 	{
 		if(dataArr[i] == Vertex1)
@@ -65,7 +65,7 @@ void ADMatrix<datatype>::insertEdge(const datatype Vertex1, const datatype Verte
 		if(dataArr[i] == Vertex2)
 			index2 = i;
 	}
-	if(index1 == 0 || index2 == 0)
+	if(index1 == -1 || index2 == -1)
 	{
 		cout << "해당 정점이 존재하지 않습니다.\n";
 		exit(-1);
@@ -94,5 +94,11 @@ void ADMatrix<datatype>::showGraph() const
 			cout << '\t' << matrix[i][j];
 		cout << endl;
 	}
+}
+
+template<typename datatype>
+void ADMatrix<datatype>::showInfor() const
+{
+	cout << vertex << " " << vertex_count << endl;
 }
 #endif

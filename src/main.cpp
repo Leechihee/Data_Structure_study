@@ -6,11 +6,7 @@ using namespace std;
 
 int main()
 {
-	ADMatrix<string> test(5);
+	ADList<int> test(5);
 
-	string arr[] = {"a","b","c","d","e"};
-	for(int i = 0;i<5;i++)
-		test.insertVertex(arr[i]);
-	// test.showGraph();
 	return 0;
 }
