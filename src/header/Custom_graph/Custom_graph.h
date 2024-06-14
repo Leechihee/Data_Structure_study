@@ -17,8 +17,7 @@ public:
 	// 메트릭스 수정 메서드
 	void insertVertex(const A Data);
 	void insertEdge(const A Vertex1, const A Vertex2);
-	void showGraph() const;
-	void showInfor() const;
+	void graphTravel(const A Vertex) const;
 };
 
 template<typename B>
@@ -27,12 +26,7 @@ class ADList{
 	int edge;
 	int vertex_count;
 	B* dataArr;
-	class node{
-	public:
-		B key;
-		class node* next = NULL;
-	};
-	List<node>* nodeArr;
+	List<B>* nodeArr;
 	bool isFull() const;
 public:
 	// 생성자 & 파괴자
@@ -41,6 +35,7 @@ public:
 	// 리스트 수정 메서드
 	void insertVertex(const B Data);
 	void insertEdge(const B Vertex1, const B Vertex2);
+	void graphTravel(const B Vertex) const;
 };
 
 #include "Custom_matrix.hpp"

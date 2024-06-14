@@ -82,23 +82,23 @@ void ADMatrix<datatype>::insertEdge(const datatype Vertex1, const datatype Verte
 }
 
 template<typename datatype>
-void ADMatrix<datatype>::showGraph() const
+void ADMatrix<datatype>::graphTravel(const datatype Vertex) const
 {
-	for(int i = 0;i<vertex;i++)
-		cout << '\t' << dataArr[i];
-	cout << endl;
+	int index = -1;
 	for(int i = 0;i<vertex;i++)
 	{
-		cout << dataArr[i];
-		for(int j = 0;j<vertex;j++)
-			cout << '\t' << matrix[i][j];
-		cout << endl;
+		if(dataArr[i] == Vertex)
+		{
+			index = i;
+			break;
+		}
 	}
-}
-
-template<typename datatype>
-void ADMatrix<datatype>::showInfor() const
-{
-	cout << vertex << " " << vertex_count << endl;
+	cout << "정점 " << dataArr[index] << "와 인접한 정점은 ";
+	for(int i = 0;i<vertex;i++)
+	{
+		if(matrix[index][i])
+			cout << dataArr[i] << " ";
+	}
+	cout << "이다.\n";
 }
 #endif

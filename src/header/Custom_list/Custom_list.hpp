@@ -266,6 +266,8 @@ void List<T>::nChenge(int pos,const List<T> & source)
 template<typename T>
 void List<T>::show() const
 {
+	if(isEmpty())
+		return;
 	node* temp;
 	for(temp = head->next;temp->next != NULL;temp = temp->next)
 		cout << temp->data << " ";
@@ -298,13 +300,11 @@ template<typename T>
 int List<T>::FindData(T target) const
 {
 	int Target = target;
-	if(isEmpty())
-	{
-		cout << "FindData() : 리스트가 비어있습니다.\n";
-		exit(-1);
-	}
-	else
-	{
+	// if(isEmpty())
+	// {
+	// 	cout << "FindData() : 리스트가 비어있습니다.\n";
+	// 	exit(-1);
+	// }
 		for(int i = Begin();i<=End();i++)
 		{
 			int temp = ReturnData(i);
@@ -313,7 +313,6 @@ int List<T>::FindData(T target) const
 		}
 		cout << target << "을 찾을 수 없습니다.\n";
 		return -1;
-	}
 }
 
 template<typename T>
