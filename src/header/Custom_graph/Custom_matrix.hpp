@@ -1,13 +1,30 @@
 #ifndef CUSTOM_MATRIX_HPP_
 #define CUSTOM_MATRIX_HPP_
-
-namespace {using namespace std;}
+#include "../errorCode.h"
+namespace
+{
+	using namespace std;
+}
 
 //ADMatrix Private Method
 template<typename datatype>
 bool ADMatrix<datatype>::isFull() const
 {
 	return vertex_count == vertex;
+}
+
+template<typename datatype>
+void ADMatrix<datatype>::findVertex(int indexArr[], const datatype Vertex1, const datatype Vertex2)
+{
+	for(int i = 0;i<vertex && (indexArr[0] == -1 || indexArr[1] == -1);i++)
+	{
+		if(dataArr[i] == Vertex1)
+			indexArr[0] = i;
+		if(dataArr[i] == Vertex2)
+			indexArr[1] = i;
+	}
+	if(indexArr[0] == -1 || indexArr[1] == -1)
+		throw ERROR_CORD::NOT_FIND;
 }
 
 // ADMatrix Public Method
@@ -57,28 +74,39 @@ void ADMatrix<datatype>::insertEdge(const datatype Vertex1, const datatype Verte
 			insertVertex(insert_vel);
 		}
 	}
-	int index1 = -1, index2 = -1;
-	for(int i = 0;i<vertex;i++)
+	int index[2] = {-1,-1};
+	try
 	{
-		if(dataArr[i] == Vertex1)
-			index1 = i;
-		if(dataArr[i] == Vertex2)
-			index2 = i;
+		findVertex(index, Vertex1, Vertex2);
 	}
-	if(index1 == -1 || index2 == -1)
+	catch(char* ERROR_CORD)
 	{
-		cout << "해당 정점이 존재하지 않습니다.\n";
+		cout << "insertEdge() : 정점을 " << ERROR_CORD;
 		exit(-1);
 	}
-	else
+	if(matrix[index[0]][index[1]] == 0)
 	{
-		if(matrix[index1][index2] == 0)
-		{
-			matrix[index1][index2] = 1;
-			matrix[index2][index1] = 1;
-			edge++;
-		}
+		matrix[index[0]][index[1]] = 1;
+		matrix[index[1]][index[0]] = 1;
+		edge++;
 	}
+}
+
+template<typename datatype>
+void ADMatrix<datatype>::deleteEdge(const datatype Vertex1, const datatype Vertex2)
+{
+	int index[2] = {-1,-1};
+	try
+	{
+		findVertex(index, Vertex1, Vertex2);
+	}
+	catch(char* ERROR_CORD)
+	{
+		cout << "deleteEdge() : 정점을 " << ERROR_CORD;
+		exit(-1);
+	}
+	matrix[index[0]][index[1]] = 0;
+	matrix[index[1]][index[0]] = 0;
 }
 
 template<typename datatype>

@@ -1,8 +1,27 @@
 #ifndef CUSTOM_ADLIST_HPP_
 #define CUSTOM_ADLIST_HPP_
 #include "../Custom_list/Custom_list.h"
+#include "../errorCode.h"
 
-namespace {using namespace std;}
+namespace
+{
+	using namespace std;
+}
+
+// ADList Private Method
+template<typename datatype>
+void ADList<datatype>::findVertex(int indexArr[], const datatype Vertex1, const datatype Vertex2)
+{
+	for(int i = 0;i<vertex_count && (indexArr[0] == -1 || indexArr[1] == -1);i++)
+	{
+		if(dataArr[i] == Vertex1)
+			indexArr[0] = i;
+		if(dataArr[i] == Vertex2)
+			indexArr[1] = i;
+	}
+	if(indexArr[0] == -1 || indexArr[1] == -1)
+		throw ERROR_CORD::NOT_FIND;
+}
 
 // ADList Private Method
 template<typename datatype>
@@ -43,28 +62,39 @@ void ADList<datatype>::insertVertex(const datatype Data)
 template<typename datatype>
 void ADList<datatype>::insertEdge(const datatype Vertex1, const datatype Vertex2)
 {
-	int index1 = -1, index2 = -1;
-	for(int i = 0;i<vertex_count && (index1 == -1 || index2 == -1);i++)
+	int index[2] = {-1,-1};
+	try
 	{
-		if(dataArr[i] == Vertex1)
-			index1 = i;
-		if(dataArr[i] == Vertex2)
-			index2 = i;
+		findVertex(index, Vertex1, Vertex2);
 	}
-	if(index1 == -1 || index2 == -1)
+	catch(char* ERROR_CORD)
 	{
-		cout << "해당 정점이 존재하지 않습니다.\n";
+		cout << "insertEdge() : 정점을 " << ERROR_CORD;
 		exit(-1);
 	}
-	else
+	if(!(nodeArr[index[0]].FindData(Vertex2)+1))
 	{
-		if(!(nodeArr[index1].FindData(Vertex2)+1))
-		{
-			nodeArr[index1].Insert(1,Vertex2);
-			nodeArr[index2].Insert(1,Vertex1);
-			edge++;
-		}
+		nodeArr[index[0]].Insert(1,Vertex2);
+		nodeArr[index[1]].Insert(1,Vertex1);
+		edge++;
 	}
+}
+
+template<typename datatype>
+void ADList<datatype>::deleteEdge(const datatype Vertex1, const datatype Vertex2)
+{
+	int index[2] = {-1,-1};
+	try
+	{
+		findVertex(index, Vertex1, Vertex2);
+	}
+	catch(char* ERROR_CORD)
+	{
+		cout << "deleteEdge() : " << ERROR_CORD;
+		exit(-1);
+	}
+	nodeArr[index[0]].Delete(nodeArr[index[0]].FindOrAdd(dataArr[index[1]]));
+	nodeArr[index[1]].Delete(nodeArr[index[1]].FindOrAdd(dataArr[index[0]]));
 }
 
 template<typename datatype>
