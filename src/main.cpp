@@ -6,17 +6,12 @@ using namespace std;
 
 int main()
 {
-	ADMatrix<int> test(5);
+	ADList<int> test(5);
 	
-	for(int i = 1;i<=5;i++)
+	for(int i = 0;i<5;i++)
 		test.insertVertex(i);
 	
-	test.insertEdge(1,5);
 	test.insertEdge(1,4);
 	test.graphTravel(1);
-	test.graphTravel(5);
-	test.deleteEdge(1,5);
-	test.graphTravel(1);
-	test.graphTravel(5);
 	return 0;
 }

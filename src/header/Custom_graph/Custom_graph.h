@@ -4,6 +4,7 @@
 
 template<typename A>
 class ADMatrix{
+	int mode;
 	int vertex;
 	int edge;
 	int vertex_count;
@@ -13,13 +14,15 @@ class ADMatrix{
 	void findVertex(int indexArr[], const A Vertex1, const A Vertex2);
 public:
 	// 생성자 & 파괴자
-	ADMatrix(const int Vertex_counts);
+	ADMatrix(const int Vertex_counts, const int Mode = nonDir);
 	~ADMatrix();
 	// 메트릭스 수정 메서드
 	void insertVertex(const A Data);
-	void insertEdge(const A Vertex1, const A Vertex2);
+	void insertEdge(const A Vertex1, const A Vertex2, const int Weight = 1);
 	void deleteEdge(const A Vertex1, const A Vertex2);
 	void graphTravel(const A Vertex) const;
+	// 자료구조
+	enum{nonDir,Dir};
 };
 
 template<typename B>

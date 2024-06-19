@@ -30,7 +30,7 @@ void ADMatrix<datatype>::findVertex(int indexArr[], const datatype Vertex1, cons
 // ADMatrix Public Method
 // 생성자 & 파괴자
 template<typename datatype>
-ADMatrix<datatype>::ADMatrix(const int Vertex_counts) : vertex(Vertex_counts), edge(0), vertex_count(0)
+ADMatrix<datatype>::ADMatrix(const int Vertex_counts, const int Mode) : vertex(Vertex_counts), edge(0), vertex_count(0), mode(Mode)
 {
 	dataArr = new datatype[vertex];
 	matrix = new int*[vertex];
@@ -61,7 +61,7 @@ void ADMatrix<datatype>::insertVertex(datatype Data)
 }
 
 template<typename datatype>
-void ADMatrix<datatype>::insertEdge(const datatype Vertex1, const datatype Vertex2)
+void ADMatrix<datatype>::insertEdge(const datatype Vertex1, const datatype Vertex2, const int Weight)
 {
 	if(!isFull())
 	{
@@ -86,9 +86,11 @@ void ADMatrix<datatype>::insertEdge(const datatype Vertex1, const datatype Verte
 	}
 	if(matrix[index[0]][index[1]] == 0)
 	{
-		matrix[index[0]][index[1]] = 1;
-		matrix[index[1]][index[0]] = 1;
+		matrix[index[0]][index[1]] = Weight;
 		edge++;
+		if(mode)
+			return;
+		matrix[index[1]][index[0]] = Weight;
 	}
 }
 
@@ -106,6 +108,8 @@ void ADMatrix<datatype>::deleteEdge(const datatype Vertex1, const datatype Verte
 		exit(-1);
 	}
 	matrix[index[0]][index[1]] = 0;
+	if(mode)
+		return;
 	matrix[index[1]][index[0]] = 0;
 }
 
@@ -125,7 +129,7 @@ void ADMatrix<datatype>::graphTravel(const datatype Vertex) const
 	for(int i = 0;i<vertex;i++)
 	{
 		if(matrix[index][i])
-			cout << dataArr[i] << " ";
+			cout << dataArr[i] << "(" << matrix[index][i] << ")";
 	}
 	cout << "이다.\n";
 }
