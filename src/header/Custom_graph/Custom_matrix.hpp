@@ -1,6 +1,8 @@
 #ifndef CUSTOM_MATRIX_HPP_
 #define CUSTOM_MATRIX_HPP_
 #include "../errorCode.h"
+#include "../Custom_stack/Custom_stack.h"
+#include <iomanip>
 namespace
 {
 	using namespace std;
@@ -16,6 +18,9 @@ bool ADMatrix<datatype>::isFull() const
 template<typename datatype>
 void ADMatrix<datatype>::findVertex(int indexArr[], const datatype Vertex1, const datatype Vertex2)
 {
+	indexArr[0] = -1;
+	indexArr[1] = -1;
+	
 	for(int i = 0;i<vertex && (indexArr[0] == -1 || indexArr[1] == -1);i++)
 	{
 		if(dataArr[i] == Vertex1)
@@ -23,6 +28,7 @@ void ADMatrix<datatype>::findVertex(int indexArr[], const datatype Vertex1, cons
 		if(dataArr[i] == Vertex2)
 			indexArr[1] = i;
 	}
+	
 	if(indexArr[0] == -1 || indexArr[1] == -1)
 		throw ERROR_CORD::NOT_FIND;
 }
@@ -74,7 +80,7 @@ void ADMatrix<datatype>::insertEdge(const datatype Vertex1, const datatype Verte
 			insertVertex(insert_vel);
 		}
 	}
-	int index[2] = {-1,-1};
+	int index[2];
 	try
 	{
 		findVertex(index, Vertex1, Vertex2);
@@ -97,7 +103,7 @@ void ADMatrix<datatype>::insertEdge(const datatype Vertex1, const datatype Verte
 template<typename datatype>
 void ADMatrix<datatype>::deleteEdge(const datatype Vertex1, const datatype Vertex2)
 {
-	int index[2] = {-1,-1};
+	int index[2];
 	try
 	{
 		findVertex(index, Vertex1, Vertex2);
@@ -132,5 +138,41 @@ void ADMatrix<datatype>::graphTravel(const datatype Vertex) const
 			cout << dataArr[i] << "(" << matrix[index][i] << ")";
 	}
 	cout << "이다.\n";
+}
+
+template<typename datatype>
+void ADMatrix<datatype>::showGraph() const
+{
+	cout << '\t';
+	for(int i = 0;i<vertex;i++)
+		cout << setw(2) << dataArr[i] << '\t';
+	cout << endl;
+	for(int i = 0;i<vertex;i++)
+	{
+		cout << dataArr[i] << '\t';
+		for(int j = 0;j<vertex;j++)
+			cout << setw(2) << matrix[i][j] << '\t';
+		cout << endl;
+	}
+}
+
+template<typename datatype>
+void ADMatrix<datatype>::floyd_Algorithm()
+{
+	for(int i = 0;i<vertex;i++)
+	{
+		for(int j = 0;j<vertex;j++)
+			matrix[i][j] = findEdgeweight(dataArr[i],dataArr[j]);
+	}
+}
+
+template<typename datatype>
+int ADMatrix<datatype>::findEdgeweight(const datatype startVertex, const datatype targetVertex)
+{
+	int index[2];
+	findVertex(index,startVertex,targetVertex);
+	Stack<int> DFS(vertex);
+	
+	return 0;
 }
 #endif

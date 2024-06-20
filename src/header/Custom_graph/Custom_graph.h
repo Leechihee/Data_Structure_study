@@ -12,6 +12,7 @@ class ADMatrix{
 	A* dataArr;
 	bool isFull() const;
 	void findVertex(int indexArr[], const A Vertex1, const A Vertex2);
+	int findEdgeweight(const A startVertex,const A targetVertex);
 public:
 	// 생성자 & 파괴자
 	ADMatrix(const int Vertex_counts, const int Mode = nonDir);
@@ -20,7 +21,11 @@ public:
 	void insertVertex(const A Data);
 	void insertEdge(const A Vertex1, const A Vertex2, const int Weight = 1);
 	void deleteEdge(const A Vertex1, const A Vertex2);
+	// 메트릭스 출력 메서드
+	void showGraph() const;
 	void graphTravel(const A Vertex) const;
+	// 알고리즘
+	void floyd_Algorithm();
 	// 자료구조
 	enum{nonDir,Dir};
 };
